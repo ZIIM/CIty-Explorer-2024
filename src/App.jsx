@@ -49,7 +49,7 @@ render () {
     <>
       <h1>City Explorer</h1>
       <form onSubmit={this.handleForm}>
-        <input placeholder="Enter City Name" name="city" value={this.state.searchQuery? this.state.searchQuery : 'Enter City Name'} type="text" onChange={this.handleChange} />
+        <input placeholder="" name="city" value={this.state.searchQuery? this.state.searchQuery : ''} type="text" onChange={this.handleChange} />
         <button type='submit' >
             Explore!
             {/* <Link to="/search">Search!</Link> */}
