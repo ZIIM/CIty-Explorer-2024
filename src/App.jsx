@@ -21,7 +21,7 @@ class App extends React.Component {
     console.log('City name provided', this.state.searchQuery); // hide later
     console.log('API Key: ', API_KEY) // hide later
     const urlQuery = `https://us1.locationiq.com/v1/search.php?key=${API_KEY}&q=${this.state.searchQuery}&format=json`;
-    axios.get(urlQuery)
+    axios.get(urlQuery) // AXIOS!!!!!!!
       .then(response => {
         const newLocationData = response.data[0];
         this.setState({locationData: newLocationData})
