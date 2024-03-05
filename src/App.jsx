@@ -39,7 +39,7 @@ class App extends React.Component {
 
         console.log('Error: ', error) // hide later
 
-        
+
         this.setState({errorState: error.message})
       });
 
@@ -69,7 +69,6 @@ render () {
         lon={this.state.locationData ? this.state.locationData.lon : ''}
         mapURL={this.state.mapURL ? this.state.mapURL : null}
       />
-
       {this.state.errorState ? <Error error={this.state.errorState}/> : ''}
 
     </>
