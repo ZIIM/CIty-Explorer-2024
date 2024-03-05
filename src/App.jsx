@@ -18,8 +18,10 @@ class App extends React.Component {
 
   handleForm = (e) => {
     e.preventDefault();
+
     console.log('City name provided', this.state.searchQuery); // hide later
     console.log('API Key: ', API_KEY) // hide later
+
     const urlQuery = `https://us1.locationiq.com/v1/search.php?key=${API_KEY}&q=${this.state.searchQuery}&format=json`;
     axios.get(urlQuery) // AXIOS!!!!!!!
       .then(response => {
@@ -29,10 +31,15 @@ class App extends React.Component {
         const mapQueryURL = `https://maps.locationiq.com/v3/staticmap?key=${API_KEY}&center=${newLocationData.lat},${newLocationData.lon}&zoom=9`;
         this.setState({mapURL: mapQueryURL});
 
-        console.log('SUCCESS: ', mapQueryURL)
+        console.log('SUCCESS: ', mapQueryURL) // hide later
+
+
       })
       .catch(error => {
+
         console.log('Error: ', error) // hide later
+
+        
         this.setState({errorState: error.message})
       });
 
