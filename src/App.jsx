@@ -3,6 +3,7 @@ import axios from 'axios';
 import './App.css';
 import CityDetails from './components/CityDetails';
 import Error from './components/error';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const API_KEY = import.meta.env.VITE_API_KEY;
 class App extends React.Component {
