@@ -4,8 +4,11 @@ import './App.css';
 import CityDetails from './components/CityDetails';
 import Error from './components/error';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Weather from './components/Weather';
 
 const API_KEY = import.meta.env.VITE_API_KEY;
+
+
 class App extends React.Component {
   constructor() {
     super();
@@ -14,6 +17,8 @@ class App extends React.Component {
       locationData: null,
       mapURL: null,
       errorState: null,
+      // weather below
+      forecastData: null,
     }
   }
 
@@ -25,26 +30,24 @@ class App extends React.Component {
 
     const urlQuery = `https://us1.locationiq.com/v1/search.php?key=${API_KEY}&q=${this.state.searchQuery}&format=json`;
     axios.get(urlQuery) // AXIOS!!!!!!!
-      .then(response => {
-        const newLocationData = response.data[0];
-        this.setState({locationData: newLocationData})
+    .then(response => {
+      const newLocationData = response.data[0];
+      this.setState({locationData: newLocationData})
 
-        const mapQueryURL = `https://maps.locationiq.com/v3/staticmap?key=${API_KEY}&center=${newLocationData.lat},${newLocationData.lon}&zoom=9`;
-        this.setState({mapURL: mapQueryURL});
+      const mapQueryURL = `https://maps.locationiq.com/v3/staticmap?key=${API_KEY}&center=${newLocationData.lat},${newLocationData.lon}&zoom=9`;
+      this.setState({mapURL: mapQueryURL});
 
-        console.log('SUCCESS: ', mapQueryURL) // hide later
-
-
-      })
-      .catch(error => {
-
-        console.log('Error: ', error) // hide later
-
-
-        this.setState({errorState: error.message})
-      });
-
-  }
+      return axios.get(`http://localhost:3001/weather?city=${this.state.searchQuery}&lat={newLocationData.lat}&lon=${newLocationData.lon}`);
+    })
+    .then(response =>{
+      console.log('something happened!', response.data) // hide later
+      this.setState({forecastData: response.data})
+    })
+    .catch(error => {
+      console.log('Error: ', error) // error msg to con
+      this.setState({errorState: error.message})
+    });
+}
 
   handleChange= (e) => {
     const newQuery = e.target.value;
@@ -71,6 +74,8 @@ render () {
         mapURL={this.state.mapURL ? this.state.mapURL : null}
       />
       {this.state.errorState ? <Error error={this.state.errorState}/> : ''}
+      {/* weather below */}
+      {this.state.forecastData ? <Weather weatherData={this.state.forecastData}/> : ''}
 
     </>
     )
